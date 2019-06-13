@@ -16,15 +16,16 @@
   * destroy() // prototype method that returns: `${this.name} was removed from the game.`
 */
 
-function GameObject(date, size, name) {
-  this.createdAt = date;
-  this.name = name;
-  this.dimensions = size;
+function GameObject(details) {
+  this.createdAt = details.createdAt;
+  this.name = details.name;
+  this.dimensions = details.dimensions;
 };
 
 GameObject.prototype.destroy = function() {
   return `${this.name} was removed from the game.`;
 };
+
 
 /*
   === CharacterStats ===
@@ -33,9 +34,9 @@ GameObject.prototype.destroy = function() {
   * should inherit destroy() from GameObject's prototype
 */
 
-function CharacterStats(date, size, health, name) {
-  this.healthPoints = health;
-  GameObject.call(this, date, size, name);
+function CharacterStats(CSDetails) {
+  this.healthPoints = CSDetails.healthPoints;
+  GameObject.call(this, CSDetails);
 };
 CharacterStats.prototype = Object.create(GameObject.prototype);
 
@@ -53,19 +54,19 @@ CharacterStats.prototype.takeDamage = function() {
   * should inherit takeDamage() from CharacterStats
 */
 
-function Humanoid(date, size, health, name, team, weapons, language) {
-  this.team = team;
-  this.weapons = weapons;
-  this.language = language;
-  CharacterStats.call(this, date, size, health, name);
+function Humanoid(HDetails) {
+  this.team = HDetails.team;
+  this.weapons = HDetails.weapons;
+  this.language = HDetails.language;
+  CharacterStats.call(this, HDetails);
 };
 
 Humanoid.prototype = Object.create(CharacterStats.prototype);
 
 Humanoid.prototype.greet = function() {
-  return `${this.name} offers a greeting in ${this.language}.`
+  return `${this.name} offers a greeting in ${this.language}.`;
 };
- 
+
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
   * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
@@ -73,7 +74,7 @@ Humanoid.prototype.greet = function() {
 */
 
 // Testing out code above before releasing code below to start game
-// const newObj = new Humanoid('blue', 'gun', 'french', 20, 'may', 'susan', 5);
+// const newObj = new Humanoid({createdAt: 'may 3rd', dimensions: 5, healthPoints: 10, name: 'susan', team: 'blue', weapons: 'gun', language: 'french'});
 // console.log(newObj);
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
